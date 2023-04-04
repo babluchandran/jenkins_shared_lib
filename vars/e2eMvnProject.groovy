@@ -5,7 +5,7 @@ def call(Map args) {
         }
 
         stage("Compile") {
-            sh "mvn install -DskipTests"
+            sh "cd demo && mvn install -DskipTests"
         }
 		
         stage("Docker Build") {
