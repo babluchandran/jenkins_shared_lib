@@ -1,4 +1,4 @@
-def call(String repoUrl) {
+def call(Map args) {
   pipeline {
        agent any
        stages {
@@ -11,7 +11,7 @@ def call(String repoUrl) {
            stage("Checkout Code") {
                steps {
                    git branch: 'master',
-                       url: "${repoUrl}"
+                       url: "${args.repoUrl}"
                }
            }
            stage("Cleaning workspace") {
