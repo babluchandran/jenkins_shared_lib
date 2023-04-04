@@ -5,7 +5,8 @@ def call(body) {
     body()	
     node {
         stage("Checkout") {
-            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_credentials', url: '${params.url}']])
+            //checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_credentials', url: '${params.url}']])
+		sh "echo ${params.url}"
         }
 
         stage("Compile") {
