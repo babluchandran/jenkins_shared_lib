@@ -1,21 +1,34 @@
-def call(body) {
-    def params= [:]
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = params
-    body()	
-    node {
-        stage("Checkout") {
-            //checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_credentials', url: '${params.url}']])
-		sh "echo ${params.url}"
-        }
+vars
+| --- welcomeJob.groovy
+| --- jenkinsForJava.groovy
 
-        stage("Compile") {
-            sh "cd demo && mvn install -DskipTests"
-        }
-		
-        stage("Docker Build") {
-            sh "docker build -t test ."
-        }		
-
-    }
+// jenkinsForJava.groovy
+def call(String repoUrl) {
+  pipeline {
+       agent any
+       stages {
+           stage("Tools initialization") {
+               steps {
+                   sh "mvn --version"
+                   sh "java -version"
+               }
+           }
+           stage("Checkout Code") {
+               steps {
+                   git branch: 'master',
+                       url: "${repoUrl}"
+               }
+           }
+           stage("Cleaning workspace") {
+               steps {
+                   sh "cd demo && mvn clean install -DskipTests"
+               }
+           }
+           stage("Docker Build") {
+               steps {
+                   sh "docker build -t test ."
+               }
+           }
+       }
+   }
 }
