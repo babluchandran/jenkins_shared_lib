@@ -1,7 +1,11 @@
-def call(Map args) {
+def call(body) {
+    def params= [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = params
+    body()	
     node {
         stage("Checkout") {
-            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_credentials', url: 'https://github.com/babluchandran/hello-world']])
+            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git_credentials', url: '${params.url}']])
         }
 
         stage("Compile") {
