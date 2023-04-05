@@ -21,15 +21,13 @@ def call(Map args) {
                }
            }
            stage("Docker Build") {
+              when {
+                expression { args.dockerize == "True" }
+              }             
              steps{
                script {
                  def dockerize = args.dockerize
-                 if (dockerize == "True") {
-                   sh "docker build -t test ."
-                 }
-                 else{
-                    println("Dokcer stage is defined False, hence omitting*****")
-                 }
+
                }
              }
            }
