@@ -21,10 +21,12 @@ def call(Map args) {
                }
            }
            stage("Docker Build") {
-             script {
-               def dockerize = args.dockerize
-               if (dockerize == "True") {
-                 sh "docker build -t test ."
+             steps{
+               script {
+                 def dockerize = args.dockerize
+                 if (dockerize == "True") {
+                   sh "docker build -t test ."
+                 }
                }
              }
            }
