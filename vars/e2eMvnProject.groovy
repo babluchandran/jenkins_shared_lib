@@ -27,6 +27,9 @@ def call(Map args) {
                  if (dockerize == "True") {
                    sh "docker build -t test ."
                  }
+                 else{
+                    println("Dokcer stage is defined False, hence omitting*****")
+                 }
                }
              }
            }
