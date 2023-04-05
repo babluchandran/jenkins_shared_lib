@@ -27,7 +27,7 @@ def call(Map args) {
              steps{
                script {
                  def dockerize = args.dockerize
-
+                 sh "docker build -t test ."
                }
              }
            }
