@@ -21,6 +21,8 @@ def call(Map args) {
                }
            }
            stage("Docker Build") {
+             //dockerize=${args.}
+             //if ()
                steps {
                    sh "docker build -t test ."
                }
