@@ -31,6 +31,27 @@ def call(Map args) {
                }
              }
            }
+			stage("Docker Build") {
+				steps {
+					input {
+						message "Proceed with Docker build?"
+						parameters {
+							choice(
+								choices: 'Yes\nNo',
+								description: 'Select Yes to proceed or No to abort',
+								name: 'Docker_BUILD_CONFIRMATION'
+							)
+						}
+					}
+					script {
+						if (params.Docker_BUILD_CONFIRMATION == 'Yes') {
+							sh "docker ls" // Replace with your Docker build commands
+						} else {
+							error "Docker build aborted by user"
+						}
+					}
+				}
+			}		   
        }
    }
 }
