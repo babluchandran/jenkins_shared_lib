@@ -26,6 +26,16 @@ def call(Map args) {
               }             
              steps{
                script {
+                 input {
+                    message 'Proceed with docker build?'
+                    parameters {
+                        choice(
+                            choices: 'Yes\nNo',
+                            description: 'Select Yes to proceed or No to abort',
+                            name: 'DOCKER_BUILD_CONFIRMATION'
+                        )
+                    }
+                }
                  def dockerize = args.dockerize
                  sh "docker build -t test ."
                }
