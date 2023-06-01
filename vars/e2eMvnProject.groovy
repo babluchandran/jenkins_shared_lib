@@ -33,18 +33,17 @@ def call(Map args) {
             }
             stage("Docker List") {
                 steps {
-                    input {
-                        message "Proceed with Docker list?"
-                        parameters {
-                            choice(
-                                choices: 'Yes\nNo',
-                                description: 'Select Yes to proceed or No to abort',
-                                name: 'Docker_LIST_CONFIRMATION'
-                            )
-                        }
-                    }
                     script {
-                        if (params.Docker_LIST_CONFIRMATION == 'Yes') {
+                        def userInput = input(
+                            message: 'Proceed with Docker list?',
+                            parameters: [
+                                [$class: 'ChoiceParameterDefinition',
+                                 choices: 'Yes\nNo',
+                                 description: 'Select Yes to proceed or No to abort',
+                                 name: 'Docker_LIST_CONFIRMATION']
+                            ]
+                        )
+                        if (userInput == 'Yes') {
                             sh "docker ls"
                         } else {
                             error "Docker list aborted by user"
