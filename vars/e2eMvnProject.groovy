@@ -27,7 +27,7 @@ def call(Map args) {
              steps{
                script {
                  input {
-                    message 'Proceed with docker build?'
+                    message "${'Proceed with docker build?'.toString()}"
                     parameters {
                         choice(
                             choices: 'Yes\nNo',
