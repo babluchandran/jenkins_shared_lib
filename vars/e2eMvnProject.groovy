@@ -25,7 +25,6 @@ def call(Map args) {
                 expression { args.dockerize == "True" }
               }             
              steps{
-               script {
                  input {
                     message "${'Proceed with docker build?'.toString()}"
                     parameters {
@@ -36,6 +35,7 @@ def call(Map args) {
                         )
                     }
                 }
+               script {               
                  def dockerize = args.dockerize
                  sh "docker build -t test ."
                }
