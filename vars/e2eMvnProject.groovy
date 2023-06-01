@@ -15,7 +15,7 @@ def call(Map args) {
                        url: "${args.repoUrl}"
                }
            }
-           stage("Cleaning workspace") {
+           stage("Maven Build") {
                steps {
                    sh "cd demo && mvn clean install -DskipTests"
                }
