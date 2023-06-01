@@ -44,7 +44,7 @@ def call(Map args) {
                             ]
                         )
                         if (userInput == 'Yes') {
-                            sh "docker ls"
+                            sh "docker images"
                         } else {
                             error "Docker list aborted by user"
                         }
