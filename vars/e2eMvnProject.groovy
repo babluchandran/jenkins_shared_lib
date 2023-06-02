@@ -27,24 +27,26 @@ def call(Map args) {
                 steps {
                     script {
                         def dockerize = args.dockerize
+                        sh "docker rmi -f test"
                         sh "docker build -t test ."
                     }
                 }
             }
-            stage("Docker List") {
+            stage("Docker Run") {
                 steps {
                     script {
                         def userInput = input(
-                            message: 'Proceed with Docker list?',
+                            message: 'Proceed with Docker Run?',
                             parameters: [
                                 [$class: 'ChoiceParameterDefinition',
                                  choices: 'Yes\nNo',
                                  description: 'Select Yes to proceed or No to abort',
-                                 name: 'Docker_LIST_CONFIRMATION']
+                                 name: 'Docker_RUN_CONFIRMATION']
                             ]
                         )
                         if (userInput == 'Yes') {
-                            sh "docker images"
+                            sh "docker stop testcontainer"
+                            sh "docker run -n testcontainer -p 80:8080 test "
                         } else {
                             error "Docker list aborted by user"
                         }
