@@ -45,7 +45,7 @@ def call(Map args) {
                             ]
                         )
                         if (userInput == 'Yes') {
-                            sh "docker stop testcontainer"
+                            sh "docker rm -f testcontainer"
                             sh "docker run --name testcontainer -p 80:8080 test "
                         } else {
                             error "Docker list aborted by user"
